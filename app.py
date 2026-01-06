@@ -61,12 +61,12 @@ HTML_TEMPLATE = '''
         }
         
         .container {
-            max-width: 1200px;
+            max-width:2300px;
             margin: 0 auto;
         }
         
         header {
-            text-align: center;
+           
             color: white;
             margin-bottom: 30px;
         }
@@ -107,38 +107,39 @@ HTML_TEMPLATE = '''
         
         .earthquake-card {
             background: white;
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 5px;
+            padding: 10px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
         
-        .earthquake-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-        }
+       
         
         .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 15px;
+           display:flex;
+           
+            margin-bottom: 0px;
+            
         }
         
         .magnitude {
-            font-size: 2em;
+            
+            display:flex;
+            align-items: center;
+             font-size:clamp(4em,16vw,21em);
             font-weight: bold;
-            color: #667eea;
+            color: #000000;
         }
         
         .scale-badge {
-            display: inline-block;
-            padding: 8px 16px;
+            color:black;
+             margin-left:90px;
+            display:flex;
+            align-items: center;
+            padding: 0px;
             border-radius: 20px;
             font-weight: bold;
-            font-size: 1.1em;
+             font-size:clamp(4em,16vw,21em);
         }
         
         .scale-1 { background: #4ade80; color: white; }
@@ -147,27 +148,27 @@ HTML_TEMPLATE = '''
         .scale-4 { background: #f97316; color: white; }
         .scale-5 { background: #ef4444; color: white; }
         .scale-6 { background: #dc2626; color: white; }
-        .scale-7 { background: #991b1b; color: white; }
+        .scale-7 { background: #af0000; color: white; }
         
         .card-body {
             display: grid;
-            gap: 10px;
+            gap: 0px;
         }
         
         .info-row {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 1px;
         }
         
         .info-label {
             font-weight: bold;
-            color: #666;
+            color: #000000;
             min-width: 80px;
         }
         
         .info-value {
-            color: #333;
+            color: #000000;
         }
         
         .loading {
@@ -186,8 +187,8 @@ HTML_TEMPLATE = '''
         }
         
         .tsunami-warning {
-            background: #fef3c7;
-            color: #92400e;
+            background: #00000000;
+            color: #000000;
             padding: 10px;
             border-radius: 8px;
             margin-top: 10px;
@@ -198,12 +199,12 @@ HTML_TEMPLATE = '''
 <body>
     <div class="container">
         <header>
-            <h1>🌍 地震速報</h1>
-            <div class="update-info">最新の地震情報</div>
-            <button class="refresh-btn" onclick="loadEarthquakes()">🔄 更新</button>
+           
+            <button class="refresh-btn" onclick="loadEarthquakes()">更新</button>
         </header>
         
         <div id="content">
+        
             <div class="loading">読み込み中...</div>
         </div>
     </div>
@@ -211,17 +212,17 @@ HTML_TEMPLATE = '''
     <script>
         function getScaleText(scale) {
             const scales = {
-                10: '震度1',
-                20: '震度2',
-                30: '震度3',
-                40: '震度4',
-                45: '震度5弱',
-                50: '震度5強',
-                55: '震度6弱',
-                60: '震度6強',
-                70: '震度7'
+                10: '1',
+                20: '2',
+                30: '3',
+                40: '4',
+                45: '5弱',
+                50: '5強',
+                55: '6弱',
+                60: '6強',
+                70: '7'
             };
-            return scales[scale] || '震度不明';
+            return scales[scale] || '不明';
         }
         
         function getScaleClass(scale) {
@@ -259,7 +260,7 @@ HTML_TEMPLATE = '''
         
         async function loadEarthquakes() {
             const content = document.getElementById('content');
-            content.innerHTML = '<div class="loading">読み込み中...</div>';
+            //content.innerHTML = '<div class="loading">読み込み中...</div>';
             
             try {
                 const response = await fetch('/api/earthquakes');
@@ -281,46 +282,46 @@ HTML_TEMPLATE = '''
                 earthquakes.forEach(eq => {
                     const hasTsunami = eq.domesticTsunami !== 'None' && eq.domesticTsunami !== 'Unknown';
                     
-                    html += `
-                        <div class="earthquake-card">
+                    html += ` 
+                    <div class="earthquake-card ${getScaleClass(eq.maxScale)} ">
                             <div class="card-header">
-                                <div class="magnitude">M${eq.magnitude.toFixed(1)}</div>
-                                <div class="scale-badge ${getScaleClass(eq.maxScale)}">
-                                    ${getScaleText(eq.maxScale)}
+                                <div class="magnitude"><div style="font-size:0.16em">マグニチュード</div>M${eq.magnitude.toFixed(1)}</div>
+                                <div class="scale-badge ${getScaleClass(eq.maxScale)} ">
+                                    <div style="font-size:0.16em">震度</div>${getScaleText(eq.maxScale)}
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="info-row">
-                                    <span class="info-label">📅 発生時刻:</span>
+                                    <span class="info-label"> 発生時刻:</span>
                                     <span class="info-value">${formatDate(eq.time)}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">📍 震源地:</span>
+                                    <span class="info-label"> 震源地:</span>
                                     <span class="info-value">${eq.hypocenter}</span>
                                 </div>
                                 <div class="info-row">
-                                    <span class="info-label">🔽 深さ:</span>
+                                    <span class="info-label"> 深さ:</span>
                                     <span class="info-value">${eq.depth}km</span>
                                 </div>
                                 ${hasTsunami ? `
                                     <div class="tsunami-warning">
-                                        ⚠️ ${getTsunamiText(eq.domesticTsunami)}
+                                         ${getTsunamiText(eq.domesticTsunami)}
                                     </div>
                                 ` : ''}
                             </div>
-                        </div>
-                    `;
+                        </div> 
+                     `;
                 });
                 
                 html += '</div>';
                 content.innerHTML = html;
                 
             } catch (error) {
-                content.innerHTML = `
-                    <div class="error">
-                        エラーが発生しました: ${error.message}
-                    </div>
-                `;
+                //content.innerHTML = `
+                //    <div class="error">
+                //        エラーが発生しました: ${error.message}
+                //    </div>
+                //`;
             }
         }
         
