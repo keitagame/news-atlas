@@ -126,7 +126,7 @@ HTML_TEMPLATE = '''
             
             display:flex;
             align-items: center;
-             font-size:clamp(4em,16vw,21em);
+             font-size:clamp(4em,13vw,21em);
             font-weight: bold;
             color: #000000;
         }
@@ -139,7 +139,7 @@ HTML_TEMPLATE = '''
             padding: 0px;
             border-radius: 20px;
             font-weight: bold;
-             font-size:clamp(4em,16vw,21em);
+             font-size:clamp(4em,13vw,21em);
         }
         
         .scale-1 { background: #4ade80; }
