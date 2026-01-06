@@ -142,13 +142,13 @@ HTML_TEMPLATE = '''
              font-size:clamp(4em,16vw,21em);
         }
         
-        .scale-1 { background: #4ade80; color: white; }
-        .scale-2 { background: #fbbf24; color: white; }
-        .scale-3 { background: #fb923c; color: white; }
-        .scale-4 { background: #f97316; color: white; }
-        .scale-5 { background: #ef4444; color: white; }
-        .scale-6 { background: #dc2626; color: white; }
-        .scale-7 { background: #af0000; color: white; }
+        .scale-1 { background: #4ade80; }
+        .scale-2 { background: #fbbf24;  }
+        .scale-3 { background: #fb923c; }
+        .scale-4 { background: #f97316;  }
+        .scale-5 { background: #ef4444; }
+        .scale-6 { background: #dc2626;  }
+        .scale-7 { background: #af0000; }
         
         .card-body {
             display: grid;
